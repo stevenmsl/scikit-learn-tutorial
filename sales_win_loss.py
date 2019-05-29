@@ -46,5 +46,46 @@ sales_data['Supplies Subgroup'] = le.fit_transform(sales_data['Supplies Subgroup
 sales_data['Region'] = le.fit_transform(sales_data['Region'])
 sales_data['Route To Market'] = le.fit_transform(sales_data['Route To Market'])
 sales_data['Opportunity Result'] = le.fit_transform(sales_data['Opportunity Result'])
+sales_data['Competitor Type'] = le.fit_transform(sales_data['Competitor Type'])
 sales_data['Supplies Group'] = le.fit_transform(sales_data['Supplies Group'])
-sales_data.head() 
+sales_data.head()
+#%% Training Set & Test Set
+# Need to run the above cell to pre-process the data
+cols =[col for col in sales_data.columns if col not in ['Opportunity Number', 'Opportunity Result']]
+data = sales_data[cols]
+target = sales_data['Opportunity Result']
+#%%
+target.head(n=2)
+#%%
+# feature set
+data.head(n=2)
+#%% 
+# Split the data into training set and test set
+from sklearn.model_selection import train_test_split
+# Set the random_state to a certain number, doesn’t matter what it actually is, will guarantee how the data is split will remain the same every time you run this method. 
+data_train, data_test, target_train, target_test = train_test_split(data, target, test_size= 0.30, random_state = 10) 
+
+#%%
+data_train.head(n=2)
+
+#%% Gaussian Naïve Bayes 
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+gnb = GaussianNB()
+# train the algorithm
+pred = gnb.fit(data_train, target_train).predict(data_test)
+print (pred.tolist())
+#%% GNB accuracy score
+print("Naive-Bayes accuracy : ", accuracy_score(target_test, pred, normalize= True))
+#%% GNB 
+from yellowbrick.classifier import ClassificationReport
+visualizer = ClassificationReport(gnb, classes = ['Won', 'Loss'])
+visualizer.fit(data_train, target_train)
+visualizer.score(data_test, target_test)
+g = visualizer.poof()
+
+
+
+
+
+
