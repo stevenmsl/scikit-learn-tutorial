@@ -77,15 +77,41 @@ pred = gnb.fit(data_train, target_train).predict(data_test)
 print (pred.tolist())
 #%% GNB accuracy score
 print("Naive-Bayes accuracy : ", accuracy_score(target_test, pred, normalize= True))
-#%% GNB 
+#%% GNB Performance
 from yellowbrick.classifier import ClassificationReport
 visualizer = ClassificationReport(gnb, classes = ['Won', 'Loss'])
 visualizer.fit(data_train, target_train)
 visualizer.score(data_test, target_test)
 g = visualizer.poof()
 
+#%% Linear Support Vector Classification
+from sklearn.svm import LinearSVC
+from sklearn.metrics import accuracy_score
+svc = LinearSVC(random_state=0)
+# Need to investigate this warning: Liblinear failed to converge, increase the number of iterations.
+# "the number of iterations.", ConvergenceWarning)
 
+pred = svc.fit(data_train, target_train).predict(data_test)
+print ("LinearSVC accuracy : ", accuracy_score(target_test, pred, normalize=True))
 
+#%% SVC Performance
+from yellowbrick.classifier import ClassificationReport
+visualizer = ClassificationReport(svc, classes = ['Won', 'Loss'])
+visualizer.fit(data_train, target_train)
+visualizer.score(data_test, target_test)
+g = visualizer.poof()
 
+#%% K-Neighbors Classifiers
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+knc = KNeighborsClassifier(n_neighbors=3)
+knc.fit(data_train, target_train)
+pred = knc.predict(data_test)
+print ("K-Neighbors accuracy score : ", accuracy_score(target_test, pred))
 
-
+#%% K-Neighbors Classifiers performance
+from yellowbrick.classifier import ClassificationReport
+visualizer = ClassificationReport(knc, classes = ['Won', 'Loss'])
+visualizer.fit(data_train, target_train)
+visualizer.score(data_test, target_test)
+g = visualizer.poof()
