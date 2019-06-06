@@ -93,7 +93,7 @@ mape = np.mean(100* (errors/test_labels))
 accuracy = 100 - mape
 print ('Accuracy:', round(accuracy, 2), '%.')
 
-#%% visualizations 
+#%% visualizations part 1
 import matplotlib.pyplot as plt 
 # To solve the problem where in VS Code the default dark theme makes the labels hard to see 
 plt.style.use('dark_background')
@@ -104,4 +104,41 @@ plt.xticks(x_values, features_list,  rotation ='vertical')
 plt.ylabel('Importance'); plt.xlabel('Variable')
 plt.title('Variable Importances')
 
-#%%
+#%% visualizations part 2
+import datetime
+# true data - from the actual column
+months = features[:, features_list.index('month')]
+days = features[:, features_list.index('day')]
+years = features[:, features_list.index('year')]
+dates = [str(int(year)) + '-' + str(int(month)) + '-' + str(int(day)) \
+    for year, month, day in zip(years,months,days) ]
+dates = [datetime.datetime.strptime(date, '%Y-%m-%d') \
+    for date in dates]
+# The true_data (348 rows) would look like this:
+# 0	 2016-01-01	 45
+# 1	 2016-01-02	 44
+true_data = pd.DataFrame(data = {'date': dates, 'actual': labels})
+
+# predictions
+months = test_features[:, features_list.index('month')]
+days = test_features[:, features_list.index('day')]
+years = test_features[:, features_list.index('year')]
+test_dates = [str(int(year)) + '-' + str(int(month)) + '-' + str(int(day)) \
+    for year, month, day in zip(years,months,days) ]
+test_dates = [datetime.datetime.strptime(date, '%Y-%m-%d') \
+    for date in test_dates]
+
+# The predictions_data (87 rows) would look like this:
+# 0	 2016-09-29	 68.889833
+# 1	 2016-04-27	 61.328000
+predictions_data = pd.DataFrame(data = {'date':test_dates, 'prediction':predictions})
+
+# Plotting  
+# plot the actual values
+plt.plot(true_data['date'], true_data['actual'], 'b-', label = 'actual')
+# plot the predicted values
+plt.plot(predictions_data['date'], predictions_data['prediction'], 'ro', label = 'prediction')
+plt.xticks(rotation = '60')
+plt.legend()
+plt.xlabel('Date'); plt.ylabel('Maximum Temperature (F)'); plt.title('Actual and Predicted Values')
+
