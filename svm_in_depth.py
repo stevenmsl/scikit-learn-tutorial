@@ -52,11 +52,25 @@ def plot_svc_decision_function(model, ax=None, plot_support=True):
     Y, X = np.meshgrid(y, x)
 
 #%% meshgrid
-nx, ny = (3, 2)
-x = np.linspace(0, 1, nx)
-y = np.linspace(0, 1, ny)
-print (x.shape); print (x); print (y.shape); print(y)
-# There will be 6 points 3 x 2 = 6 in the rectangular grid
+ax = plt.gca()
+# (0.0, 1.0)
+xlim = ax.get_xlim()
+# (0.0, 1.0)
+ylim = ax.get_ylim()
+x = np.linspace(xlim[0], xlim[1], 30) # x coordinates 
+y = np.linspace(ylim[0], ylim[1], 30) # y coordinates
+# There will be 900 points 30 x 30 = 900 in the rectangular grid
+# xv yv have the same dimensions - (number of y coordinates, number of x coordinates)  
 xv, yv = np.meshgrid(x, y)
-print (xv.shape, xv)
-print (yv.shape, yv)
+print (xv.shape)
+print (yv.shape)
+plt.plot(xv, yv, marker='.', linestyle='none')
+
+#%%   xy = np.vstack([X.ravel(), Y.ravel()]).T
+x = np.linspace(0, 1, 5)
+y = np.linspace(0, 1, 5)
+Y, X = np.meshgrid(y, x)
+
+
+
+#%%
