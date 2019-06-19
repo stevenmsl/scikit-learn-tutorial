@@ -24,4 +24,17 @@ plt.contour(X, Y, Z, 20, cmap='RdGy')
 plt.contourf(X, Y, Z, 20, cmap='RdGy')
 plt.colorbar()
 
-#%% 
+#%% eliminate splotches – color steps are discrete rather than continuous
+plt.imshow(Z, extent=[0,5,0,5], # must manually specify the extent
+origin='lower', # change it to lower left to show the gridded data
+cmap='RdGy')
+plt.colorbar()
+plt.axis(aspect='image') #make x and y units match
+#%% combine contour and image plots
+contours = plt.contour(X, Y, Z, 3, colors='black')
+plt.clabel(contours, inline=True, fontsize=8)
+plt.imshow(Z, extent=[0, 5, 0, 5],
+origin='lower',
+cmap='RdGy', alpha=0.5)
+plt.colorbar()
+#%%
