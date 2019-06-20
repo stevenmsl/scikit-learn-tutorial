@@ -68,9 +68,27 @@ plt.plot(xv, yv, marker='.', linestyle='none')
 
 #%%   xy = np.vstack([X.ravel(), Y.ravel()]).T
 x = np.linspace(0, 1, 5)
-y = np.linspace(0, 1, 5)
+y = np.linspace(0, 1, 3)
 Y, X = np.meshgrid(y, x)
-
-
+#plt.plot(Y, X, marker='.', linestyle='none')
+xr = X.ravel()
+yr = Y.ravel()
+xy = np.vstack([xr, yr])
+xyt = xy.T
+#%% see how the data is transformed
+print (X, '\n', xr)
+print (Y, '\n', yr)
+print (xy, '\n')
+print (xyt, '\n')
+#%% after transformation
+# You are creating a 2-D array with the shape (15, 2) 
+# where 15 = 5 x 3 and the two columns are x and y coordinates. 
+# The array is arranged in such that you take the first element from x 
+# and pair it with every element in y to produce the first 3 rows 
+# and you then move on to the second element in x and repeat the same step 
+# to produce the next 3 rows. Continue the process until you exhaust all elements in x.  
+print ("x:", x, '\n')
+print ("y:", y, '\n')
+print ("xyt:\n",xyt.shape, '\n', xyt, '\n')
 
 #%%
