@@ -51,6 +51,7 @@ def plot_svc_decision_function(model, ax=None, plot_support=True):
     y = np.linspace(ylim[0], ylim[1], 30)
     Y, X = np.meshgrid(y, x)
 
+
 #%% meshgrid
 ax = plt.gca()
 # (0.0, 1.0)
@@ -64,7 +65,10 @@ y = np.linspace(ylim[0], ylim[1], 30) # y coordinates
 xv, yv = np.meshgrid(x, y)
 print (xv.shape)
 print (yv.shape)
+#%% plot meshgrid
 plt.plot(xv, yv, marker='.', linestyle='none')
+#%% no difference from the previous plot as both xv and yv have the same extent and number of examples
+plt.plot(yv, xv, marker='.', linestyle='none')
 
 #%%   xy = np.vstack([X.ravel(), Y.ravel()]).T
 x = np.linspace(0, 1, 5)
