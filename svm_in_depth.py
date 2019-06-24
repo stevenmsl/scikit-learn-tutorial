@@ -41,7 +41,7 @@ from sklearn.svm import SVC
 model = SVC(kernel='linear', C=1E10)
 model.fit(X, y)
 #%%  function that plots SVM
-def plot_svc_decision_function(model, ax=None, plot_support=True):
+def plot_svc_decision_function(model, ax=None, plot_support=True, print_decision_result=False):
     if ax is None:
         ax = plt.gca() # get the current Axes instance
     xlim = ax.get_xlim()
@@ -52,6 +52,8 @@ def plot_svc_decision_function(model, ax=None, plot_support=True):
     Y, X = np.meshgrid(y, x)
     xy = np.vstack([X.ravel(), Y.ravel()]).T
     P = model.decision_function(xy).reshape(X.shape)
+    if print_decision_result:
+        print('\n', P, '\n')
     ax.contour(X, Y, P, colors='k',
     levels=[-1, 0, 1], alpah=0.5,
     linestyles=['--', '-', '--'])
@@ -63,7 +65,7 @@ def plot_svc_decision_function(model, ax=None, plot_support=True):
     ax.set_ylim(ylim)
 #%% 
 plt.scatter(X[:, 0], X[:, 1], c=y, s=50, cmap='autumn') # X contains the features generated to train the model  
-plot_svc_decision_function(model)
+plot_svc_decision_function(model, print_decision_result=True)
 
 #%% meshgrid
 ax = plt.gca()
