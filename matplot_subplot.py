@@ -24,4 +24,19 @@ ax1.plot(np.sin(x))
 ax2.plot(np.cos(x))
 #%%
 print (np.linspace(0, 10))
+#%% subplot
+for i in range(1, 7):
+    plt.subplot(2, 3, i) # (Row, column, index) 
+    plt.text(0.5, 0.5, str((2, 3, i)),
+    fontsize=18, ha='center'
+    )
+
+#%% specify spacing
+fig = plt.figure()
+# specify the spacing along the height and width of the figure 
+fig.subplots_adjust(hspace=0.4, wspace=0.4) #40% of the subplot width and height
+for i in range(1, 7):
+    ax = fig.add_subplot(2, 3, i)
+    ax.text(0.5, 0.5, str((2, 3, i)),
+    fontsize=18, ha='center')
 #%%
